@@ -1,0 +1,82 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#container {
+    height: 100%;
+    padding: 0;
+}
+
+#app {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#preloader-wrapper {
+    position: relative;
+    height: 100%;
+}
+
+#preloader-ul {
+    text-align: center;
+    font-size: 0;
+    width: 80px;
+    height: 45px;
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -22.5px 0 0 -40px;
+}
+#preloader-ul .preloader-li {
+    display: inline-block;
+    width: 8px;
+    height: 45px;
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+    -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+    animation: colorbars 333ms alternate infinite cubic-bezier(0.2, 0, 0.5, 1);
+}
+
+.one {
+    background: #2776b7;
+    border-radius: 3px 0 0 3px;
+    animation-delay: 111ms !important;
+}
+
+.two {
+    background: #328fc5;
+    animation-delay: 222ms !important;
+}
+
+.three {
+    background: #56b4d4;
+    animation-delay: 333ms !important;
+}
+
+.four {
+    background: #61ca8c;
+    animation-delay: 444ms !important;
+}
+
+.five {
+    background: #c5e9ae;
+    border-radius: 0 3px 3px 0;
+    animation-delay: 555ms !important;
+}
+
+@keyframes colorbars {
+    to {
+        -moz-transform: translateY(12px);
+        -ms-transform: translateY(12px);
+        -webkit-transform: translateY(12px);
+        transform: translateY(12px);
+    }
+}

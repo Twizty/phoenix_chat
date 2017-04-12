@@ -1,0 +1,10 @@
+<h2>Show room</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @room.name %>
+  </li>
+
+</ul>
