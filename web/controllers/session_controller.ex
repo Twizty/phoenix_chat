@@ -5,7 +5,7 @@ defmodule Chat.SessionController do
   plug :refuse_signed_in_users when action == :sign_in
   plug :refuse_not_signed_in_users when action == :sign_out
 
-  def handshake(conn, params = %{}) do
+  def handshake(conn, _params) do
     case Guardian.Plug.current_resource(conn) do
       nil ->
         conn |> send_resp(401, '')

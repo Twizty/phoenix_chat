@@ -7,6 +7,8 @@ defmodule Chat.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Guardian.Plug.VerifySession
+    plug Guardian.Plug.LoadResource
   end
 
   pipeline :api do
@@ -21,8 +23,9 @@ defmodule Chat.Router do
 
     get "/", PageController, :index
     get "/register", PageController, :index
+    get "/chat", PageController, :authorized_index
+    get "/chat/:name", PageController, :authorized_index
     get "/:name", PageController, :index
-    get "/chat/:name", PageController, :index
   end
 
   # Other scopes may use custom stacks.

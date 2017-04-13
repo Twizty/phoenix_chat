@@ -6,7 +6,7 @@ defmodule Chat.MessagesController do
   plug Guardian.Plug.EnsureAuthenticated, handler: Chat.HandleUnauthenticatedController
   plug Guardian.Plug.LoadResource
 
-  def create(conn, params = %{ "name" => name, "body" => body }) do
+  def create(conn, %{ "name" => name, "body" => body }) do
     room = Chat.FindOrCreateRoom.perform(name)
     user = Guardian.Plug.current_resource(conn)
 
