@@ -3,7 +3,8 @@ defmodule Chat.SessionView do
   def render("user.json", %{ user: user }) do
     %{
       currentUser: %{
-        name: user.name
+        name: user.name,
+        token: Phoenix.Token.sign(Chat.Endpoint, "user", user.id)
       }
     }
   end

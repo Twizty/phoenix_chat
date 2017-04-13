@@ -7,7 +7,7 @@ defmodule Chat.RoomView do
 
   def render("messages.json", %{messages: messages}) do
     %{
-      messages: Enum.map(messages, fn e -> %{body: e.body, author: e.user.name} end)
+      messages: Enum.map(messages, fn e -> %{body: e.body, author: e.user.name, id: e.id} end)
     }
   end
 end
