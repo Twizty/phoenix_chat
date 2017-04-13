@@ -16,5 +16,6 @@ defmodule Chat.User do
     struct
     |> cast(params, [:name, :encrypted_password])
     |> validate_required([:name, :encrypted_password])
+    |> validate_length(:name, min: 1)
   end
 end
