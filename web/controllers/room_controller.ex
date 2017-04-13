@@ -11,6 +11,7 @@ defmodule Chat.RoomController do
   def show(conn, params = %{ "name" => name, "last_message_id" => last_id }) do
     room = Chat.FindOrCreateRoom.perform(name)
     messages = Chat.FetchMessagesService.perform(room, last_id)
+    user_id = Guardian.Plug.current_resource(conn).id
 
     render conn, "messages.json", messages: messages
   end
