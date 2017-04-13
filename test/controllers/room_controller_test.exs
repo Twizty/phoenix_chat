@@ -30,7 +30,7 @@ defmodule Chat.RoomControllerTest do
     refute Enum.member?(parsed_response, %{"name" => "foo"})
   end
 
-  test "creates room if it does not exist", %{conn: conn} do
+  test "creates room if it does not exist" do
     query = from r in Room, where: r.name == "foo"
     user = Repo.insert! %User{name: "Foo", encrypted_password: "bar"}
     conn = guardian_login(user)
@@ -53,10 +53,10 @@ defmodule Chat.RoomControllerTest do
     resp = get conn, room_path(conn, :show, "foo")
     parsed_response = Poison.Parser.parse!(resp.resp_body)["messages"]
 
-    refute Enum.member?(parsed_response, %{"author" => user.name, "body" => message.body})
+    refute Enum.member?(parsed_response, %{"author" => user.name, "body" => message.body, "id" => message.id})
     assert length(parsed_response) == 30
     Enum.map(messages, fn e ->
-      assert Enum.member?(parsed_response, %{"author" => user.name, "body" => e.body})
+      assert Enum.member?(parsed_response, %{"author" => user.name, "body" => e.body, "id" => e.id  })
     end)
   end
 
@@ -71,10 +71,10 @@ defmodule Chat.RoomControllerTest do
     resp = get conn, room_path(conn, :show, "foo", last_message_id: message.id)
     parsed_response = Poison.Parser.parse!(resp.resp_body)["messages"]
 
-    refute Enum.member?(parsed_response, %{"author" => user.name, "body" => message.body})
+    refute Enum.member?(parsed_response, %{"author" => user.name, "body" => message.body, "id" => message.id})
     assert length(parsed_response) == 30
     Enum.map(messages, fn e ->
-      assert Enum.member?(parsed_response, %{"author" => user.name, "body" => e.body})
+      assert Enum.member?(parsed_response, %{"author" => user.name, "body" => e.body, "id" => e.id})
     end)
   end
 

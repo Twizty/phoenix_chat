@@ -18,7 +18,7 @@ defmodule Chat.UserControllerTest do
 
   test "raises bad request when user with the same name exists", %{conn: conn} do
     query = from r in User, where: r.name == "Foo"
-    user = Repo.insert! %User{name: "Foo", encrypted_password: "bar"}
+    Repo.insert! %User{name: "Foo", encrypted_password: "bar"}
     prev_count = Repo.aggregate(query, :count, :id)
     user_params = %{"user" => %{"name" => "Foo", "password" => "123", "password_confirmation" => "123"}}
 
