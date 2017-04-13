@@ -1,11 +1,27 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { isEmpty } from 'lodash'
 
-import { registerUser } from '../actions'
+import { registerUser, clearUserErrors } from '../actions'
 
 export class Register extends Component {
   static propTypes = {
     dispatch: PropTypes.func
+  }
+
+  state = {
+    isSubmitDisabled: true
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!isEmpty(nextProps.errors)) {
+      this.displayErrors(nextProps.errors.errors)
+    }
+  }
+
+  displayErrors(errors) {
+    alert(Object.keys(errors).map(k => [k, errors[k]].join(' ')).join(', '))
+    this.props.dispatch(clearUserErrors())
   }
 
   handleSubmit = (e) => {
@@ -19,10 +35,16 @@ export class Register extends Component {
     this.props.dispatch(registerUser({user: data}))
   }
 
+  handleFormChange = () => {
+    this.setState({
+      isSubmitDisabled: this.name.value.length < 1 || this.password.value.length < 1 || this.passwordConfirmation.value.length < 1
+    })
+  }
+
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} onChange={this.handleFormChange}>
           <div className="form-group">
             <input type="text" placeholder="Name" className="form-control" ref={ el => this.name = el }/>
           </div>
@@ -35,11 +57,17 @@ export class Register extends Component {
                    className="form-control"
                    ref={ el => this.passwordConfirmation = el } />
           </div>
-          <input type="submit" value="Sign In" className="btn btn-success" />
+          <input disabled={this.state.isSubmitDisabled} type="submit" value="Sign In" className="btn btn-success" />
         </form>
       </div>
     )
   }
 }
 
-export default connect()(Register)
+const mapStateToProps = (state) => {
+  return {
+    errors: state.app.currentUser.errors
+  }
+}
+
+export default connect(mapStateToProps)(Register)

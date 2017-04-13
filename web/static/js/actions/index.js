@@ -9,7 +9,7 @@ export function registerUser(data) {
       url: '/api/register',
       data
     }).then(response => dispatch({type: types.REGISTER_USER_SUCCESS, data: response.data}))
-      .catch(errors => dispatch({type: types.REGISTER_USER_FAILURE, errors}))
+      .catch(errors => dispatch({type: types.REGISTER_USER_FAILURE, errors: errors.response.data}))
   }
 }
 
@@ -26,7 +26,7 @@ export function scrollMessages(conversationName, lastMessageId) {
       method: 'get',
       url: `/api/rooms/${conversationName}?last_message_id=${lastMessageId}`,
     }).then(response => dispatch({type: types.SCROLL_ROOM_SUCCESS, data: response.data}))
-      .catch(errors => dispatch({type: types.SCROLL_ROOM_FAILURE, errors}))
+      .catch(errors => dispatch({type: types.SCROLL_ROOM_FAILURE, errors: errors.response.data}))
   }
 }
 
@@ -37,7 +37,7 @@ export function makeHandshake() {
       method: 'get',
       url: '/api/handshake'
     }).then(response => dispatch({type: types.HANDSHAKE_SUCCESS, data: response.data}))
-      .catch(errors => dispatch({type: types.HANDSHAKE_FAILURE, errors}))
+      .catch(errors => dispatch({type: types.HANDSHAKE_FAILURE, errors: errors.response.data}))
   }
 }
 
@@ -49,7 +49,7 @@ export function signInUser(data) {
       url: '/api/sign_in',
       data
     }).then(response => dispatch({type: types.SIGN_IN_USER_SUCCESS, data: response.data}))
-      .catch(errors => dispatch({type: types.SIGN_IN_USER_FAILURE, errors}))
+      .catch(errors => dispatch({type: types.SIGN_IN_USER_FAILURE, errors: errors.response.data}))
   }
 }
 
@@ -61,7 +61,7 @@ export function signOutUser(data) {
       url: '/api/sign_out',
       data
     }).then(response => dispatch({type: types.SIGN_OUT_USER_SUCCESS, data: response.data}))
-      .catch(errors => dispatch({type: types.SIGN_OUT_USER_FAILURE, errors}))
+      .catch(errors => dispatch({type: types.SIGN_OUT_USER_FAILURE, errors: errors.response.data}))
   }
 }
 
@@ -72,7 +72,7 @@ export function fetchRoom(conversationName) {
       method: 'get',
       url: `/api/rooms/${conversationName}`,
     }).then(response => dispatch({type: types.FETCH_ROOM_SUCCESS, data: response.data}))
-      .catch(errors => dispatch({type: types.FETCH_ROOM_FAILURE, errors}))
+      .catch(errors => dispatch({type: types.FETCH_ROOM_FAILURE, errors: errors.response.data}))
   }
 }
 
@@ -83,7 +83,7 @@ export function fetchRooms(filter) {
       method: 'get',
       url: `/api/rooms/?name=${filter}`,
     }).then(response => dispatch({type: types.FETCH_ROOMS_SUCCESS, data: response.data}))
-      .catch(errors => dispatch({type: types.FETCH_ROOMS_FAILURE, errors}))
+      .catch(errors => dispatch({type: types.FETCH_ROOMS_FAILURE, errors: errors.response.data}))
   }
 }
 
@@ -97,8 +97,12 @@ export function addMessage(conversationName, data) {
         body: data
       }
     }).then(response => dispatch({type: types.ADD_MESSAGE_SUCCESS, data: response.data}))
-      .catch(errors => dispatch({type: types.ADD_MESSAGE_FAILURE, errors}))
+      .catch(errors => dispatch({type: types.ADD_MESSAGE_FAILURE, errors: errors.response.data}))
   }
+}
+
+export function clearUserErrors() {
+  return { type: types.CLEAR_USER_ERRORS }
 }
 
 export function addMessageFromSocket(message) {

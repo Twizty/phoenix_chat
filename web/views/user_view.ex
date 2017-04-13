@@ -1,12 +1,12 @@
 defmodule Chat.UserView do
   use Chat.Web, :view
 
-  @passwords_match_error "Password and password confirmation does not match"
+  @passwords_match_error "does not match"
 
   def render("errors.json", %{ type: :passwords_match }) do
     %{
       errors: %{
-        password: @passwords_match_error
+        passwords: @passwords_match_error
       }
     }
   end

@@ -10,8 +10,11 @@ export default function(state = DEFAULT_STATE, action) {
     case types.SIGN_IN_USER_SUCCESS:
     case types.HANDSHAKE_SUCCESS:
       return { ...state, entity: action.data.currentUser }
-    case types.HANDSHAKE_FAILURE:
-      return { ...state, errors: 'handshake failure' }
+    case types.REGISTER_USER_FAILURE:
+    case types.SIGN_IN_USER_FAILURE:
+      return { ...state, errors: action.errors }
+    case types.CLEAR_USER_ERRORS:
+      return { ...state, errors: null }
     default:
       return { ...state }
   }

@@ -2,17 +2,16 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { isEmpty } from 'lodash'
 
-import { signInUser } from '../actions'
+import { signInUser, clearUserErrors } from '../actions'
 
 class SignIn extends React.Component {
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
     if (!isEmpty(nextProps.currentUser)) {
       return this.redirectToApp()
     }
 
-    if (!isEmpty(nextProps.error)) {
-      return this.displayError()
+    if (!isEmpty(nextProps.errors)) {
+      return this.displayError(nextProps.errors.error)
     }
   }
 
@@ -20,8 +19,9 @@ class SignIn extends React.Component {
     this.props.router.push('/chat')
   }
 
-  displayError() {
-    console.log(this.props.error)
+  displayError(err) {
+    alert(err)
+    this.props.dispatch(clearUserErrors())
   }
 
   handleSubmit = (e) => {
@@ -44,7 +44,7 @@ class SignIn extends React.Component {
 const mapStateToProps = (state) => {
   return {
     currentUser: state.app.currentUser.entity,
-    error: state.app.currentUser.errors
+    errors: state.app.currentUser.errors
   }
 }
 
