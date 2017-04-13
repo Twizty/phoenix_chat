@@ -4,7 +4,8 @@ defmodule Chat.FetchRoomsByNameService do
 
   def perform(name) do
     query = from r in Chat.Room,
-              where: ilike(r.name, ^"%#{name}%")
+              where: ilike(r.name, ^"%#{name}%"),
+              limit: 10
 
     Repo.all(query)
   end
