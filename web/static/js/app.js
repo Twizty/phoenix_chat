@@ -13,47 +13,9 @@
 // to also remove its path from "config.paths.watched".
 import "phoenix_html"
 import ReactDOM from 'react-dom';
-import React from 'react';
-import Home from './components/Home';
-import Handshake from './components/Handshake';
-import SignIn from './components/SignIn';
-import Register from './components/Register';
-import Chat from './components/Chat';
-import Chats from './components/Chats.jsx';
-import { Provider, connect } from 'react-redux'
-import { createStore, combineReducers, applyMiddleware } from 'redux'
-import { Router, Route, browserHistory } from 'react-router'
-import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
-import appReducer from './reducers'
-import thunk from 'redux-thunk'
+import { Provider } from 'react-redux'
 
-import { makeHandshake } from './actions'
-
-let store = createStore(combineReducers({app: appReducer, routing: routerReducer}), applyMiddleware(thunk))
-const history = syncHistoryWithStore(browserHistory, store)
-
-class App extends React.Component {
-  componentWillMount() {
-    this.props.dispatch(makeHandshake())
-  }
-
-  render() {
-    return (
-      <div className="app-wrapper">
-        <Router history={history}>
-          <Route path="/" component={Handshake} />
-          <Route path="/home" component={Home} />
-          <Route path="/sign_in" component={SignIn} />
-          <Route path="/register" component={Register} />
-          <Route path="/chat/:name" component={Chat}/>
-          <Route path="/chat" component={Chats}/>
-        </Router>
-      </div>
-    )
-  }
-}
-
-App = connect()(App)
+import App, { store } from './components/App'
 
 ReactDOM.render(
   <Provider store={store}>
@@ -61,9 +23,3 @@ ReactDOM.render(
   </Provider>,
   document.querySelector('#app')
 )
-// Import local files
-//
-// Local files can be imported directly using relative
-// paths "./socket" or full ones "web/static/js/socket".
-
-// import socket from "./socket"

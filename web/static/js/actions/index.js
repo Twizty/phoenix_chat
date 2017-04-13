@@ -53,15 +53,15 @@ export function signInUser(data) {
   }
 }
 
-export function signOutUser(data) {
+export function signOutUser() {
   return (dispatch) => {
     dispatch({type: types.SIGN_OUT_USER_REQUEST})
     axios({
       method: 'delete',
-      url: '/api/sign_out',
-      data
-    }).then(response => dispatch({type: types.SIGN_OUT_USER_SUCCESS, data: response.data}))
-      .catch(errors => dispatch({type: types.SIGN_OUT_USER_FAILURE, errors: errors.response.data}))
+      url: '/api/sign_out'
+    }).then(() => {
+      location.pathname = '/home'
+    })
   }
 }
 

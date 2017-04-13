@@ -113,3 +113,53 @@ html, body {
 .app-wrapper {
     height: 100%;
 }
+
+.welcome {
+    text-align: center;
+    font-size: 20px;
+}
+
+.buttons {
+    list-style: none;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+    text-align: center;
+}
+
+.buttons li {
+    width: 144px;
+    height: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+    display: table;
+    margin-bottom: 16px;
+}
+
+.buttons li a {
+    display: table-cell;
+    vertical-align: middle;
+    color: white;
+}
+
+.sign-in {
+    background-color: #86C3FF;
+}
+
+.register {
+    background-color: #758DFF;
+}
+
+.app-header {
+    height: 40px;
+    padding-top: 8px;
+}
+
+.app-header button {
+    float: right;
+    height: 25px;
+    margin: 0;
+    padding: 2px;
+}
