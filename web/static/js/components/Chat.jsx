@@ -54,7 +54,7 @@ class Chat extends React.Component {
   componentDidUpdate(prevProps) {
     const last = this.props.messages[this.props.messages.length - 1]
     const prevLast = prevProps.messages[prevProps.messages.length - 1]
-    if (!prevLast && last || last.id > prevLast.id) {
+    if (!prevLast && last || (prevLast && last && last.id > prevLast.id)) {
       this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight
       return
     }
@@ -71,6 +71,7 @@ class Chat extends React.Component {
   handleSubmit = () => {
     this.props.dispatch(addMessage(this.roomName, this.textarea.value))
     this.textarea.value = ""
+    this.setState({isSubmitDisabled: true})
   }
 
   handleChange = () => {

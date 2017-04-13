@@ -2,13 +2,16 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { isEmpty } from 'lodash'
 
+import { clearUserErrors } from '../actions'
+
 class Handshake extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (!isEmpty(nextProps.currentUser)) {
       return this.redirectToApp()
     }
 
-    if (!isEmpty(nextProps.error)) {
+    if (nextProps.error) {
+      this.props.dispatch(clearUserErrors())
       return this.redirectToLoginPage()
     }
   }
@@ -39,7 +42,7 @@ class Handshake extends React.Component {
 const mapStateToProps = (state) => {
   return {
     currentUser: state.app.currentUser.entity,
-    error: state.app.currentUser.errors
+    error: state.app.currentUser.handshakeError
   }
 }
 
