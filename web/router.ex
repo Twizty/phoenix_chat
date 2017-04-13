@@ -22,6 +22,7 @@ defmodule Chat.Router do
     get "/", PageController, :index
     get "/register", PageController, :index
     get "/:name", PageController, :index
+    get "/chat/:name", PageController, :index
   end
 
   # Other scopes may use custom stacks.
@@ -33,7 +34,6 @@ defmodule Chat.Router do
      post "/register", UserController, :create
      get "/rooms/:name", RoomController, :show
      get "/rooms", RoomController, :index
-#     get "/:name/messages", MessagesController, :index
      post "/:name/messages", MessagesController, :create
    end
 end
