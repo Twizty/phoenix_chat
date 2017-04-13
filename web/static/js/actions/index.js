@@ -13,6 +13,23 @@ export function registerUser(data) {
   }
 }
 
+export function clearRooms() {
+  return {
+    type: types.CLEAR_ROOMS
+  }
+}
+
+export function scrollMessages(conversationName, lastMessageId) {
+  return (dispatch) => {
+    dispatch({type: types.SCROLL_ROOM_REQUEST})
+    axios({
+      method: 'get',
+      url: `/api/rooms/${conversationName}?last_message_id=${lastMessageId}`,
+    }).then(response => dispatch({type: types.SCROLL_ROOM_SUCCESS, data: response.data}))
+      .catch(errors => dispatch({type: types.SCROLL_ROOM_FAILURE, errors}))
+  }
+}
+
 export function makeHandshake() {
   return (dispatch) => {
     dispatch({type: types.HANDSHAKE_REQUEST})
@@ -37,7 +54,7 @@ export function signInUser(data) {
 }
 
 export function signOutUser(data) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({type: types.SIGN_OUT_USER_REQUEST})
     axios({
       method: 'delete',
@@ -48,25 +65,51 @@ export function signOutUser(data) {
   }
 }
 
-export function fetchMessages(conversationName) {
-  return (dispatch, getState) => {
-    dispatch({type: types.MESSAGES_REQUEST})
+export function fetchRoom(conversationName) {
+  return (dispatch) => {
+    dispatch({type: types.FETCH_ROOM_REQUEST})
     axios({
       method: 'get',
-      url: `/api/${conversationName}/messages`,
-    }).then(response => dispatch({type: types.MESSAGES_SUCCESS, data: response.data}))
-      .catch(errors => dispatch({type: types.MESSAGES_FAILURE, errors}))
+      url: `/api/rooms/${conversationName}`,
+    }).then(response => dispatch({type: types.FETCH_ROOM_SUCCESS, data: response.data}))
+      .catch(errors => dispatch({type: types.FETCH_ROOM_FAILURE, errors}))
+  }
+}
+
+export function fetchRooms(filter) {
+  return (dispatch) => {
+    dispatch({type: types.FETCH_ROOMS_REQUEST})
+    axios({
+      method: 'get',
+      url: `/api/rooms/?name=${filter}`,
+    }).then(response => dispatch({type: types.FETCH_ROOMS_SUCCESS, data: response.data}))
+      .catch(errors => dispatch({type: types.FETCH_ROOMS_FAILURE, errors}))
   }
 }
 
 export function addMessage(conversationName, data) {
-  return (dispatch, getState) => {
-    dispatch({type: types.MESSAGES_REQUEST})
+  return (dispatch) => {
+    dispatch({type: types.ADD_MESSAGE_REQUEST})
     axios({
       method: 'post',
       url: `/api/${conversationName}/messages`,
-      data
-    }).then(response => dispatch({type: types.MESSAGES_SUCCESS, data: response.data}))
-      .catch(errors => dispatch({type: types.MESSAGES_FAILURE, errors}))
+      data: {
+        body: data
+      }
+    }).then(response => dispatch({type: types.ADD_MESSAGE_SUCCESS, data: response.data}))
+      .catch(errors => dispatch({type: types.ADD_MESSAGE_FAILURE, errors}))
+  }
+}
+
+export function addMessageFromSocket(message) {
+  return {
+    type: types.ADD_MESSAGE_FROM_SOCKET,
+    message
+  }
+}
+
+export function clearRoom() {
+  return {
+    type: types.CLEAR_ROOM
   }
 }
