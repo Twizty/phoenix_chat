@@ -2,13 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { isEmpty } from 'lodash'
 
-import { makeHandshake } from '../actions'
-
 class Handshake extends React.Component {
-  componentWillMount() {
-    this.props.dispatch(makeHandshake())
-  }
-
   componentWillReceiveProps(nextProps) {
     if (!isEmpty(nextProps.currentUser)) {
       return this.redirectToApp()

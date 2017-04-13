@@ -19,29 +19,48 @@ import Handshake from './components/Handshake';
 import SignIn from './components/SignIn';
 import Register from './components/Register';
 import Chat from './components/Chat';
-import { Provider } from 'react-redux'
+import Chats from './components/Chats.jsx';
+import { Provider, connect } from 'react-redux'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Router, Route, browserHistory } from 'react-router'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 import appReducer from './reducers'
 import thunk from 'redux-thunk'
 
+import { makeHandshake } from './actions'
+
 let store = createStore(combineReducers({app: appReducer, routing: routerReducer}), applyMiddleware(thunk))
 const history = syncHistoryWithStore(browserHistory, store)
 
+class App extends React.Component {
+  componentWillMount() {
+    this.props.dispatch(makeHandshake())
+  }
+
+  render() {
+    return (
+      <div className="app-wrapper">
+        <Router history={history}>
+          <Route path="/" component={Handshake} />
+          <Route path="/home" component={Home} />
+          <Route path="/sign_in" component={SignIn} />
+          <Route path="/register" component={Register} />
+          <Route path="/chat/:name" component={Chat}/>
+          <Route path="/chat" component={Chats}/>
+        </Router>
+      </div>
+    )
+  }
+}
+
+App = connect()(App)
+
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={history}>
-      <Route path="/" component={Handshake} />
-      <Route path="/home" component={Home} />
-      <Route path="/sign_in" component={SignIn} />
-      <Route path="/register" component={Register} />
-      <Route path="/chat/:name" component={Chat}/>
-      <Route path="/chat" component={Chat}/>
-    </Router>
+    <App/>
   </Provider>,
   document.querySelector('#app')
-);
+)
 // Import local files
 //
 // Local files can be imported directly using relative
