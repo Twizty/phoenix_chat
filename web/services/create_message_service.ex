@@ -10,6 +10,6 @@ defmodule Chat.CreateMessageService do
       body: body,
     }
 
-    Message.changeset(%Message{}, create_params) |> Repo.insert
+    %Message{} |> Message.changeset(create_params) |> Repo.insert
   end
 end

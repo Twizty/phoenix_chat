@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Home from '../components/Home';
 import Handshake from '../components/Handshake';
@@ -13,7 +12,7 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 import appReducer from '../reducers'
 import thunk from 'redux-thunk'
 
-import { makeHandshake, signOutUser } from './actions'
+import { makeHandshake, signOutUser } from '../actions'
 
 export const store = createStore(combineReducers({app: appReducer, routing: routerReducer}), applyMiddleware(thunk))
 const history = syncHistoryWithStore(browserHistory, store)

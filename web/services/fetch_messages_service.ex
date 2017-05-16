@@ -10,7 +10,7 @@ defmodule Chat.FetchMessagesService do
               limit: 30,
               preload: [:user]
 
-    Repo.all(add_last_message_id_to_query(query, last_message_id))
+    query |> add_last_message_id_to_query(last_message_id) |> Repo.all
   end
 
   def add_last_message_id_to_query(query, nil) do
@@ -18,6 +18,6 @@ defmodule Chat.FetchMessagesService do
   end
 
   def add_last_message_id_to_query(query, last_message_id) do
-    query |> where([m], m.id < ^last_message_id)
+    where(query, [m], m.id < ^last_message_id)
   end
 end

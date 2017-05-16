@@ -4,7 +4,7 @@ defmodule Chat.AuthenticateUserService do
 
   def perform(name, password) do
     query = from u in Chat.User, where: u.name == ^name
-    check_password(Repo.one(query), password)
+    query |> Repo.one |> check_password(password)
   end
 
   defp check_password(nil, _) do

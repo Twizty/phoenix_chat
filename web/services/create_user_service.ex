@@ -8,7 +8,8 @@ defmodule Chat.CreateUserService do
       encrypted_password: Comeonin.Bcrypt.hashpwsalt(pass)
     }
 
-    Chat.User.changeset(%Chat.User{}, create_params)
+    %Chat.User{}
+    |> Chat.User.changeset(create_params)
     |> unique_constraint(:name)
     |> Repo.insert
   end

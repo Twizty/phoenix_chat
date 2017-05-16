@@ -4,6 +4,8 @@ import { Socket } from "phoenix"
 
 import { fetchRoom, addMessage, addMessageFromSocket, clearRoom, makeHandshake, scrollMessages } from '../actions'
 
+const NEW_MESSAGE = 'new_msg'
+
 class Chat extends React.Component {
   state = {
     isSubmitDisabled: true
@@ -69,7 +71,12 @@ class Chat extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.dispatch(addMessage(this.roomName, this.textarea.value))
+    // this.props.dispatch(addMessage(this.roomName, this.textarea.value))
+    this.channel.push(NEW_MESSAGE, {
+      room: this.roomName,
+      body: this.textarea.value,
+      token: this.props.token
+    })
     this.textarea.value = ""
     this.setState({isSubmitDisabled: true})
   }

@@ -15,7 +15,7 @@ defmodule Chat.MessagesController do
         Chat.Endpoint.broadcast(
           "room:#{room.name}",
           @message_event,
-          %{body: message.body, author: user.name, id: message.id}
+          %{ body: message.body, author: user.name, id: message.id }
         )
         send_resp(conn, 201, '')
       { :error, changeset} ->
