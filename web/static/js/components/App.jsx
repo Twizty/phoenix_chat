@@ -1,10 +1,10 @@
 import React from 'react';
-import Home from '../components/Home';
-import Handshake from '../components/Handshake';
-import SignIn from '../components/SignIn';
-import Register from '../components/Register';
-import Chat from '../components/Chat';
-import Chats from '../components/Chats.jsx';
+import Home from './Home';
+import Handshake from './Handshake';
+import SignIn from './SignIn';
+import Register from './Register';
+import Chat from './Chat';
+import Chats from './Chats.jsx';
 import { connect } from 'react-redux'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Router, Route, browserHistory } from 'react-router'
